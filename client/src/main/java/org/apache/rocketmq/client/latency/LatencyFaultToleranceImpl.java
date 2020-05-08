@@ -64,13 +64,14 @@ public class LatencyFaultToleranceImpl implements LatencyFaultTolerance<String> 
 
     @Override
     public String pickOneAtLeast() {
+        // 从注册表中获取
         final Enumeration<FaultItem> elements = this.faultItemTable.elements();
         List<FaultItem> tmpList = new LinkedList<FaultItem>();
         while (elements.hasMoreElements()) {
             final FaultItem faultItem = elements.nextElement();
             tmpList.add(faultItem);
         }
-
+        // 进行排序 , 可用性> 延迟时间> 可用开始时间
         if (!tmpList.isEmpty()) {
             Collections.shuffle(tmpList);
 

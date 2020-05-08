@@ -246,6 +246,7 @@ public class MappedFile extends ReferenceResource {
                 int value = getReadPosition();
 
                 try {
+                    // 刷盘, https://www.jianshu.com/p/d0b4ac90dbcb 两者性能比较
                     //We only append data to fileChannel or mappedByteBuffer, never both.
                     if (writeBuffer != null || this.fileChannel.position() != 0) {
                         this.fileChannel.force(false);
@@ -307,6 +308,14 @@ public class MappedFile extends ReferenceResource {
         }
     }
 
+    /**
+     * 是否能够flush
+     * 1 文件满了
+     * 2 flushLeastPages > 0 && 未flush部分超过flushLeastPages
+     * 3 flushLeastPages = 0 && 有新写入部分
+     * @param flushLeastPages
+     * @return
+     */
     private boolean isAbleToFlush(final int flushLeastPages) {
         int flush = this.flushedPosition.get();
         int write = getReadPosition();

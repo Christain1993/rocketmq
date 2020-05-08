@@ -50,6 +50,7 @@ public class Validators {
 
     /**
      * Validate group
+     * 校验group 非空, 智能字符串, 长度小于255
      *
      * @param group
      * @throws MQClientException

@@ -69,7 +69,7 @@ public class MQFaultStrategy {
                             return mq;
                     }
                 }
-
+                // 随便获取一个
                 final String notBestBroker = latencyFaultTolerance.pickOneAtLeast();
                 int writeQueueNums = tpInfo.getQueueIdByBroker(notBestBroker);
                 if (writeQueueNums > 0) {
